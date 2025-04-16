@@ -1,0 +1,39 @@
+public interface INotificador
+{
+    void Notificar(string destinatario, string assunto, string mensagem);
+}
+
+public class EmailNotificador : INotificador
+{
+    public void Notificar(string destinatario, string assunto, string mensagem)
+    {
+        Console.WriteLine($"E-mail enviado para {destinatario}. Assunto: {assunto}");
+    }
+}
+
+public class SmsNotificador : INotificador
+{
+    public void Notificar(string destinatario, string assunto, string mensagem)
+    {
+        Console.WriteLine($"SMS enviado para {destinatario}: {mensagem}");
+    }
+}
+public class GerenciadorBiblioteca
+{
+    private readonly INotificador _notificadorEmail;
+    private readonly INotificador _notificadorSms;
+
+    public GerenciadorBiblioteca(INotificador email, INotificador sms)
+    {
+        _notificadorEmail = email;
+        _notificadorSms = sms;
+    }
+
+    public void AdicionarUsuario(string nome, int id)
+    {
+        var usuario = new Usuario { Nome = nome, ID = id };
+        usuarios.Add(usuario);
+
+        _notificadorEmail.Notificar(usuario.Nome, "Bem-vindo à Biblioteca", "Você foi cadastrado!");
+    }
+}
